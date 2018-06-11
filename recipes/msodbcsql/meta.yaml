@@ -1,0 +1,33 @@
+{% set name = "msodbcsql" %}
+{% set version = "13.1.6.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://packages.microsoft.com/ubuntu/16.04/prod/pool/main/m/msodbcsql/msodbcsql_13.1.6.0-1_amd64.deb
+
+build:
+  number: 0
+  script:
+    - cde $SRC_DIR/
+    - dpkg -x $SRC_DIR/msodbcsql_13.1.6.0-1_amd64.deb extract
+    - cp -a extrac2/opt/microsoft/msodbcsql/* $PREFIX
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - unixodbc
+    - libuuid
+    - openssl
+    - libcurl
+    - krb5
+  run:
+    - unixodbc
+    - libuuid
+    - openssl
+    - libcurl
+    - krb5
